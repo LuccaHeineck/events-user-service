@@ -1,6 +1,7 @@
 package com.eventos
 
 import com.eventos.repository.DatabaseFactory
+import com.eventos.routes.authRoutes
 import com.eventos.routes.usuarioRoutes
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
@@ -17,4 +18,5 @@ fun Application.module() {
 
     DatabaseFactory.init(this)
     usuarioRoutes()
+    authRoutes()
 }
