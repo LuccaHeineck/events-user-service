@@ -1,12 +1,13 @@
 ktor:
+  deployment:
+    port: ${DEPLOYMENT_PORT}
+
   application:
     modules:
       - com.eventos.ApplicationKt.module
-  deployment:
-    port: 8080
 
-  database:
-    url: "jdbc:postgresql://localhost:5432/eventos"
-    user: "postgres"
-    password: "4321"
-    driver: "org.postgresql.Driver"
+database:
+  url: ${DATASOURCE_URL}
+  user: ${DATASOURCE_USERNAME}
+  password: ${DATASOURCE_PASSWORD}
+  driver: ${DATASOURCE_DRIVER}

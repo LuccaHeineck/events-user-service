@@ -8,10 +8,10 @@ object DatabaseFactory {
 
     fun init(application: Application) {
         val config = application.environment.config
-        val url = config.property("ktor.database.url").getString()
-        val user = config.property("ktor.database.user").getString()
-        val password = config.property("ktor.database.password").getString()
-        val driver = config.property("ktor.database.driver").getString()
+        val url = config.property("database.url").getString()
+        val user = config.property("database.user").getString()
+        val password = config.property("database.password").getString()
+        val driver = config.property("database.driver").getString()
 
         db = Database.connect(url, driver = driver, user = user, password = password)
     }
