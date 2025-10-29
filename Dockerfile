@@ -1,5 +1,6 @@
 # Build stage
 FROM eclipse-temurin:17-jdk-jammy AS builder
+RUN useradd -m gradle
 WORKDIR /home/gradle/project
 
 # copy project
