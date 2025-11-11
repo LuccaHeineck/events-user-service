@@ -15,7 +15,7 @@ data class Usuario(
 )
 
 object UsuariosTable : Table("usuarios") {
-    val id: Column<Int> = integer("id").autoIncrement()
+    val id: Column<Int> = integer("id_usuario").autoIncrement()
     val nome = text("nome")
     val email = text("email").uniqueIndex()
     val senha = text("senha")
