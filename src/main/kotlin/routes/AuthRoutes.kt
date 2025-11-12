@@ -1,6 +1,7 @@
 package com.eventos.routes
 
 import com.eventos.model.LoginRequest
+import com.eventos.model.LoginResponse
 import com.eventos.model.Usuario
 import com.eventos.repository.UsuarioRepository
 import com.eventos.service.JwtService
@@ -23,9 +24,17 @@ fun Application.authRoutes() {
 
             post("/login") {
                 val loginRequest = call.receive<LoginRequest>()
-                if (repository.verifyLogin(loginRequest.email, loginRequest.senha)) {
+                val usuario = repository.findByEmail(loginRequest.email)
+
+                if (usuario != null && repository.verifyLogin(loginRequest.email, loginRequest.senha)) {
                     val token = JwtService.generateToken(loginRequest.email)
-                    call.respond(mapOf("token" to token))
+                    val response = LoginResponse(
+                        token = token,
+                        isAdmin = usuario.isAdmin,
+                        nome = usuario.nome,
+                        email = usuario.email
+                    )
+                    call.respond(response)
                 } else {
                     call.respond(HttpStatusCode.Unauthorized, "Email ou senha inválidos")
                 }
