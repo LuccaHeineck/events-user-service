@@ -1,5 +1,6 @@
 package com.eventos
 
+import com.eventos.plugins.GatewayValidationPlugin
 import com.eventos.repository.DatabaseFactory
 import com.eventos.routes.authRoutes
 import com.eventos.routes.usuarioRoutes
@@ -15,6 +16,7 @@ fun Application.module() {
     install(ContentNegotiation) {
         json()
     }
+    install(GatewayValidationPlugin)
 
     DatabaseFactory.init(this)
     usuarioRoutes()
