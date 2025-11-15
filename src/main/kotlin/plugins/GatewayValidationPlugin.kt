@@ -19,7 +19,7 @@ val GatewayValidationPlugin = createApplicationPlugin(name = "GatewayValidationP
         }
 
         val gatewayKey = call.request.headers["X-Gateway-Key"]
-        val expectedKey = System.getenv("GATEWAY_KEY")
+        val expectedKey = System.getenv("GATEWAY_SECRET")
 
         if (gatewayKey == null || gatewayKey != expectedKey) {
             call.respond(
