@@ -17,7 +17,7 @@ data class Usuario(
 
 object UsuariosTable : Table("usuarios") {
     val id: Column<Int> = integer("id_usuario").autoIncrement()
-    val isAdmin = bool("is_admin").default(false)
+    val isAdmin = bool("is_admin")
     val nome = text("nome")
     val email = text("email").uniqueIndex()
     val senha = text("senha")

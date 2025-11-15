@@ -7,13 +7,13 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 
-
 class UsuarioRepository {
 
     fun all(): List<Usuario> = transaction {
         UsuariosTable.selectAll().map {
             Usuario(
                 id = it[UsuariosTable.id],
+                isAdmin = it[UsuariosTable.isAdmin],
                 nome = it[UsuariosTable.nome],
                 email = it[UsuariosTable.email],
                 senha = it[UsuariosTable.senha],
@@ -29,6 +29,7 @@ class UsuarioRepository {
             ?.let { row ->
                 Usuario(
                     id = row[UsuariosTable.id],
+                    isAdmin = row[UsuariosTable.isAdmin],
                     nome = row[UsuariosTable.nome],
                     email = row[UsuariosTable.email],
                     senha = row[UsuariosTable.senha],
@@ -44,6 +45,7 @@ class UsuarioRepository {
             ?.let { row ->
                 Usuario(
                     id = row[UsuariosTable.id],
+                    isAdmin = row[UsuariosTable.isAdmin],
                     nome = row[UsuariosTable.nome],
                     email = row[UsuariosTable.email],
                     senha = row[UsuariosTable.senha],
@@ -61,6 +63,7 @@ class UsuarioRepository {
             it[senha] = hashedPassword
             it[cpf] = usuario.cpf
             it[telefone] = usuario.telefone
+            it[isAdmin] = usuario.isAdmin
         } get UsuariosTable.id
 
         usuario.copy(id = generatedId, senha = hashedPassword)
@@ -73,6 +76,7 @@ class UsuarioRepository {
             it[senha] = BCrypt.hashpw(usuario.senha, BCrypt.gensalt())
             it[cpf] = usuario.cpf
             it[telefone] = usuario.telefone
+            it[isAdmin] = usuario.isAdmin
         } > 0
     }
 
