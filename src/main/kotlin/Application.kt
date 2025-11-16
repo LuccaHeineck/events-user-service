@@ -1,11 +1,11 @@
 package com.eventos
 
-import com.eventos.plugins.GatewayValidationPlugin
 import com.eventos.repository.DatabaseFactory
 import com.eventos.routes.authRoutes
 import com.eventos.routes.usuarioRoutes
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
+import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 
 fun main(args: Array<String>) {
@@ -16,7 +16,9 @@ fun Application.module() {
     install(ContentNegotiation) {
         json()
     }
-    install(GatewayValidationPlugin)
+    install(CallLogging) {
+        level = org.slf4j.event.Level.DEBUG
+    }
 
     DatabaseFactory.init(this)
     usuarioRoutes()

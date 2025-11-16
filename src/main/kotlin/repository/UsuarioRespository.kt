@@ -71,12 +71,17 @@ class UsuarioRepository {
 
     fun update(id: Int, usuario: Usuario): Boolean = transaction {
         UsuariosTable.update({ UsuariosTable.id eq id }) {
+
             it[nome] = usuario.nome
             it[email] = usuario.email
-            it[senha] = BCrypt.hashpw(usuario.senha, BCrypt.gensalt())
             it[cpf] = usuario.cpf
             it[telefone] = usuario.telefone
             it[isAdmin] = usuario.isAdmin
+
+            // atualiza senha apenas se enviada
+            if (!usuario.senha.isNullOrBlank()) {
+                it[senha] = BCrypt.hashpw(usuario.senha, BCrypt.gensalt())
+            }
         } > 0
     }
 

@@ -29,10 +29,13 @@ fun Application.authRoutes() {
                 if (usuario != null && repository.verifyLogin(loginRequest.email, loginRequest.senha)) {
                     val token = JwtService.generateToken(loginRequest.email)
                     val response = LoginResponse(
+                        id = usuario.id,
                         token = token,
                         isAdmin = usuario.isAdmin,
                         nome = usuario.nome,
-                        email = usuario.email
+                        email = usuario.email,
+                        cpf = usuario.cpf,
+                        telefone = usuario.telefone
                     )
                     call.respond(response)
                 } else {

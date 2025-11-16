@@ -10,7 +10,7 @@ data class Usuario(
     val isAdmin: Boolean = false,
     val nome: String,
     val email: String,
-    val senha: String,  // hash da senha
+    val senha: String? = null,
     val cpf: String? = null,
     val telefone: String? = null
 )
