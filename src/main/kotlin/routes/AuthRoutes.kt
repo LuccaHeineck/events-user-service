@@ -43,12 +43,12 @@ fun Application.authRoutes() {
                 }
             }
 
-            get("/verify") {
+            post("/verify") {
                 val authHeader = call.request.headers["Authorization"]
 
                 if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                     call.respond(HttpStatusCode.Unauthorized, "Token ausente ou inválido")
-                    return@get
+                    return@post
                 }
 
                 val token = authHeader.removePrefix("Bearer ").trim()
