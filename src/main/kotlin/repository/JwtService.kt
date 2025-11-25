@@ -6,7 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException
 import java.util.*
 
 object JwtService {
-    private const val secret = "mysecret"
+    private val secret = System.getenv("JWT_SECRET") ?: error("JWT_SECRET not set")
     private const val issuer = "user-service"
     private const val validityInMs = 36_000_00 * 24 // 24h
 
@@ -24,7 +24,7 @@ object JwtService {
         return try {
             JWT.require(algorithm).withIssuer(issuer).build().verify(token)
             true
-        } catch (e: JWTVerificationException) {
+        } catch (_: JWTVerificationException) {
             false
         }
     }
