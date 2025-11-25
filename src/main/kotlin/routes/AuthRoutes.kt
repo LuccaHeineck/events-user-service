@@ -42,6 +42,23 @@ fun Application.authRoutes() {
                     call.respond(HttpStatusCode.Unauthorized, "Email ou senha inválidos")
                 }
             }
+
+            get("/verify") {
+                val authHeader = call.request.headers["Authorization"]
+
+                if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                    call.respond(HttpStatusCode.Unauthorized, "Token ausente ou inválido")
+                    return@get
+                }
+
+                val token = authHeader.removePrefix("Bearer ").trim()
+
+                if (JwtService.verifyToken(token)) {
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    call.respond(HttpStatusCode.Unauthorized, "Token inválido")
+                }
+            }
         }
     }
 }
